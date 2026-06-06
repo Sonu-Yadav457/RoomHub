@@ -1,23 +1,10 @@
 import mongoose from 'mongoose';
 
 const CollegeSchema = new mongoose.Schema({
-  name: { 
-    type: String, 
-    required: [true, 'Please add a university name'], 
-    unique: true,
-    trim: true 
-  },
-  shortCode: { 
-    type: String, 
-    required: [true, 'Please add a short code (e.g., DTU)'], 
-    unique: true, 
-    uppercase: true,
-    trim: true 
-  },
-  createdAt: { 
-    type: Date, 
-    default: Date.now 
-  }
-});
+  name: { type: String, required: true, trim: true },
+  shortCode: { type: String, required: true, trim: true, uppercase: true }
+}, { timestamps: true });
 
-export default mongoose.model('College', CollegeSchema);
+// Fix: Check if model exists already, otherwise compile it
+const College = mongoose.models.College || mongoose.model('College', CollegeSchema);
+export default College;
